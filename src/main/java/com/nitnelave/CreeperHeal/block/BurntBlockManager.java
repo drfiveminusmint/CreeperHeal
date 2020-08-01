@@ -3,10 +3,12 @@ package com.nitnelave.CreeperHeal.block;
 import com.nitnelave.CreeperHeal.CreeperHeal;
 import com.nitnelave.CreeperHeal.config.CfgVal;
 import com.nitnelave.CreeperHeal.config.CreeperConfig;
+import com.nitnelave.CreeperHeal.config.WCfgVal;
 import com.nitnelave.CreeperHeal.config.WorldConfig;
 import com.nitnelave.CreeperHeal.utils.NeighborFire;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -169,9 +171,11 @@ public abstract class BurntBlockManager
     {
         if (block.getBlock() != null)
         {
-            burntList.add(block);
-            if (CreeperConfig.getBool(CfgVal.LEAVES_VINES))
-                fireIndex.addElement(block);
+            if (!CreeperConfig.getWorld(block.getWorld()).isBlackListed(new BlockId(block.getBlock().getBlock()))) {
+                burntList.add(block);
+                if (CreeperConfig.getBool(CfgVal.LEAVES_VINES))
+                    fireIndex.addElement(block);
+            }
             block.remove();
         }
     }
